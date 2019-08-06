@@ -13,7 +13,7 @@ temp1 = 1
 
 # Raspberry Pi Pin setup
 
-GPIO.setup(GPIO.BOARD)  #Sets pin numbering sys to physical pin nums
+GPIO.setmode(GPIO.BOARD)  #Sets pin numbering sys to physical pin nums
 GPIO.setup(motor_in1, GPIO.OUT) #All GPIO.setup(pin #/variable, set as input/output)
 GPIO.setup(motor_in2, GPIO.OUT)
 GPIO.setup(motor_enable, GPIO.OUT)
