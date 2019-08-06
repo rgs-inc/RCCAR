@@ -26,7 +26,7 @@ GPIO.setup(servo_signal, GPIO.OUT)
 GPIO.output(motor_in1, GPIO.LOW)     #Set digital pins to desired output: either GPIO.HIGH or GPIO.LOW
 GPIO.output(motor_in2, GPIO.LOW)
 
-motor_pwm = GPIO.PWM(motor_enable, 60) #Make enable pin into PWM variable with freq 60Hz
+motor_pwm = GPIO.PWM(motor_enable, 490) #Make enable pin into PWM variable with freq 490Hz
 servo_pwm = GPIO.PWM(servo_signal, 50)     #Same as above, except 50Hz frequency
 
 # --------------------------
@@ -47,7 +47,7 @@ print("\n")
 
 while True:
 
-    x = input() # Get input from the command line
+    x = raw_input() # Get input from the command line
     
     if x == 'h':
         print('High speed')
@@ -56,7 +56,7 @@ while True:
         
     if x == 'm':
         print('Medium speed')
-        motor_pwm.ChangeDutyCycle(50)
+        motor_pwm.ChangeDutyCycle(70)
         temp1 = 1
         
     if x == 'l':
@@ -68,7 +68,7 @@ while True:
         print('forward')
         
         if not temp1:
-            motor_pwm.ChangeDutyCycle(50)
+            motor_pwm.ChangeDutyCycle(45)
             
         GPIO.output(motor_in1, GPIO.HIGH)
         GPIO.output(motor_in2, GPIO.LOW)
@@ -79,7 +79,7 @@ while True:
         print('backward')
         
         if not temp1:
-            motor_pwm.ChangeDutyCycle(50)
+            motor_pwm.ChangeDutyCycle(45)
             
         GPIO.output(motor_in1, GPIO.LOW)
         GPIO.output(motor_in2, GPIO.HIGH)
@@ -99,7 +99,8 @@ while True:
         
     elif x == 'q':
         print('Stop')
-        motor_pwm.stop()
+        motor_pwm.ChangeDutyCycle(0)
+        temp1 = 0
 
     elif x == 'e':
         servo_pwm.ChangeDutyCycle(7.5)
