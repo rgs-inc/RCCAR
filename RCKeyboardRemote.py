@@ -27,7 +27,7 @@ GPIO.output(motor_in1, GPIO.LOW)     #Set digital pins to desired output: either
 GPIO.output(motor_in2, GPIO.LOW)
 
 motor_pwm = GPIO.PWM(motor_enable, 60) #Make enable pin into PWM variable with freq 60Hz
-servo_pwm = GPIO.PWM(signal, 50)     #Same as above, except 50Hz frequency
+servo_pwm = GPIO.PWM(servo_signal, 50)     #Same as above, except 50Hz frequency
 
 # --------------------------
 
