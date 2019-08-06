@@ -7,7 +7,7 @@ motor_in1 = 16
 motor_in2 = 18
 motor_enable = 22
 servo_signal = 15
-temp1 = 1
+temp1 = 0
 
 # --------------------------
 
@@ -42,43 +42,68 @@ servo_pwm.start(7.5) #For servo 0 deg = 2.5, 90 deg = 7.5, 180 deg = 12.5
 # Start RC Car Keyboard Control:
 print("\n")
 print("Initial setup: STOP and Go foward")
-print("r = run w = foward s = backward a = left d = right e = stop")
+print("w = foward s = backward a = left d = right e = stop")
 print("\n")
 
 while True:
 
-    x = raw_input() # Get input from the command line
-
+    x = input() # Get input from the command line
+    
+    if x == 'h':
+        print('High speed')
+        motor_pwm.ChangeDutyCycle(100)
+        temp1 = 1
+        
+    if x == 'm':
+        print('Medium speed')
+        motor_pwm.ChangeDutyCycle(50)
+        temp1 = 1
+        
+    if x == 'l':
+        print('Low speed')
+        motor_pwm.ChangeDutyCycle(35)
+        temp1 = 1
+        
     if x == 'w':
         print('forward')
-        motor_pwm.ChangeDutyCycle(50)
+        
+        if not temp1:
+            motor_pwm.ChangeDutyCycle(50)
+            
         GPIO.output(motor_in1, GPIO.HIGH)
         GPIO.output(motor_in2, GPIO.LOW)
-        x = 'z'
+            
 
     elif x == 's':
-
+        
         print('backward')
-        motor_pwm.ChangeDutyCycle(50)
-        GPIO.output(motor_in1, GPIO.HIGH)
-        GPIO.output(motor_in2, GPIO.LOW)
-        x = 'z'
+        
+        if not temp1:
+            motor_pwm.ChangeDutyCycle(50)
+            
+        GPIO.output(motor_in1, GPIO.LOW)
+        GPIO.output(motor_in2, GPIO.HIGH)
+        
 
     elif x == 'a':
         print('Turn left')
         servo_pwm.ChangeDutyCycle(12.5)
-        time.sleep(1)
+        sleep(1)
         servo_pwm.ChangeDutyCycle(7.5)
 
     elif x == 'd':
         print('Turn right')
         servo_pwm.ChangeDutyCycle(2.5)
-        time.sleep(1)
+        sleep(1)
         servo_pwm.ChangeDutyCycle(7.5)
+        
+    elif x == 'q':
+        print('Stop')
+        motor_pwm.stop()
 
     elif x == 'e':
         servo_pwm.ChangeDutyCycle(7.5)
-        time.sleep(1)
+        sleep(2)
         motor_pwm.stop()
         GPIO.cleanup()
         print("GPIO clean up")
